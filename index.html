@@ -4,24 +4,135 @@
   <title>Numerical Methods Toolkit</title>
   <meta charset="UTF-8">
   <style>
-    body { font-family: Arial; margin:2em; }
-    #nav button { margin:5px; }
-    .input-row { margin-bottom:1em; }
-    textarea, input[type="number"], input[type="text"] { width:100%; margin:2px; }
-    pre { background: #f7f7f7; padding:10px; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #e3f2fd 0%, #90caf9 100%);
+      margin: 0;
+      min-height: 100vh;
+    }
+    h2 {
+      text-align: center;
+      color: #3949ab;
+      letter-spacing: 2px;
+      margin-top: 2em;
+      margin-bottom: 0.5em;
+      font-size: 2.2em;
+      font-weight: bold;
+    }
+    #nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 18px;
+      margin: 20px 0 26px 0;
+    }
+    #nav button {
+      background: linear-gradient(90deg, #3949ab 60%, #1e88e5 110%);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 14px 28px;
+      font-size: 1.02em;
+      font-weight: 500;
+      box-shadow: 0 2px 8px rgba(41, 65, 171, 0.08);
+      cursor: pointer;
+      transition: transform 0.16s, box-shadow 0.18s, background 0.22s;
+      outline: none;
+    }
+    #nav button:hover {
+      background: linear-gradient(90deg, #283593 60%, #1565c0 110%);
+      transform: scale(1.07);
+      box-shadow: 0 6px 18px rgba(41, 65, 171, 0.19);
+    }
+    hr {
+      border: none;
+      border-top: 2px solid #b3e5fc;
+      margin: 18px 0 28px 0;
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #solver-content {
+      max-width: 560px;
+      margin: 18px auto 0 auto;
+      background: #ffffffcc;
+      border-radius: 24px;
+      padding: 2em 2.1em;
+      box-shadow: 0 6px 32px rgba(99, 130, 208, 0.12);
+    }
+    .input-row, label {
+      margin-bottom: 1.3em;
+      color: #1565c0;
+      font-weight: 500;
+    }
+    textarea, input[type="number"], input[type="text"] {
+      width: 98%;
+      border: 1px solid #90caf9;
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 1.03em;
+      margin-top: 4px;
+      background: #f5fafd;
+      box-shadow: 0 1px 2px rgba(41,65,171,0.07);
+      transition: border 0.18s;
+    }
+    textarea:focus, input:focus {
+      border-color: #3949ab;
+      background: #e3f2fd;
+      outline: none;
+    }
+    button {
+      background: linear-gradient(90deg, #1e88e5 60%, #3949ab 110%);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 11px 22px;
+      font-size: 1em;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 4px;
+      transition: transform 0.15s, background 0.18s;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #1976d2 60%, #283593 110%);
+      transform: scale(1.06);
+    }
+    pre {
+      background: #f5fafd;
+      color: #283593;
+      padding: 14px 14px 14px 21px;
+      border-radius: 8px;
+      font-size: 1.08em;
+      box-shadow: 0 2px 14px rgba(44,93,187,0.08);
+      overflow-x: auto;
+    }
+    @media (max-width: 700px) {
+      #solver-content {
+        padding: 1.2em 0.6em;
+        max-width: 99vw;
+      }
+      .input-row, label {
+        font-size: 0.96em;
+      }
+      h2 {
+        font-size: 1.5em;
+      }
+      #nav button {
+        padding: 9px 12px;
+        font-size: 1em;
+      }
+    }
   </style>
 </head>
 <body>
   <h2>Numerical Methods Toolkit</h2>
   <div id="nav">
-    <button onclick="loadSolver('jacobi')">(Module 1)Gauss Jacobi Iteration</button>
-    <button onclick="loadSolver('gauss_seidel')">(Module 1)Gauss-Seidel Method</button>
-    <button onclick="loadSolver('lagrange')">(Module 2)Lagrange Interpolation(Normal and Inverse)</button>
-    <button onclick="loadSolver('double_integral')">(Module 3)Double Integration(Simpsons 1/3 and Trapezoidal)</button>
-    <button onclick="loadSolver('euler')">(Module 4)Euler's Method and Modified Eler's Method</button>
-    
-    <button onclick="loadSolver('laplace')">(Module 5)Laplace and Poisson's</button>
-   
+    <button onclick="loadSolver('jacobi')">(Module 1) Gauss Jacobi Iteration</button>
+    <button onclick="loadSolver('gauss_seidel')">(Module 1) Gauss-Seidel Method</button>
+    <button onclick="loadSolver('lagrange')">(Module 2) Lagrange Interpolation (Normal and Inverse)</button>
+    <button onclick="loadSolver('double_integral')">(Module 3) Double Integration (Simpsons 1/3, Trapezoidal)</button>
+    <button onclick="loadSolver('euler')">(Module 4) Euler's and Modified Euler's Method</button>
+    <button onclick="loadSolver('laplace')">(Module 5) Laplace and Poisson's</button>
   </div>
   <hr>
   <div id="solver-content"></div>
@@ -34,7 +145,6 @@ function loadSolver(type) {
   else if(type=='lagrange')lagrangeForm();
   else if(type=='double_integral')doubleIntegralForm();
   else if(type=='euler')eulerForm();
-  
   else if(type=='laplace')laplaceForm();
 }
 
@@ -78,52 +188,51 @@ function runJacobi() {
 
 // 2. Gauss-Seidel (using Jacobi variable style)
 function gaussSeidelForm() {
-  document.getElementById("solver-content").innerHTML = `
-    <h3>Gauss-Seidel Solver</h3>
-    <div class="input-row">Number of equations (n): <input id="gs_n" type="number" value="3"></div>
-    <div class="input-row">Coefficient matrix A (comma separated rows, eg. 4,1,2\\n3,5,1\\n1,1,3):<br>
-      <textarea id="gs_A" rows="3">4,1,2\n3,5,1\n1,1,3</textarea>
-    </div>
-    <div class="input-row">RHS vector b (comma separated): <input id="gs_b" type="text" value="4,7,3"></div>
-    <div class="input-row">Initial guess x (comma separated): <input id="gs_x0" type="text" value="0,0,0"></div>
-    <div class="input-row">Max iterations: <input id="gs_max" type="number" value="25"></div>
-    <div class="input-row">Tolerance: <input id="gs_tol" type="number" step="any" value="0.001"></div>
-    <button onclick="runGaussSeidel()">Solve</button>
-    <pre id="gs_result"></pre>
-  `;
+  document.getElementById("solver-content").innerHTML = `
+    <h3>Gauss-Seidel Solver</h3>
+    <div class="input-row">Number of equations (n): <input id="gs_n" type="number" value="3"></div>
+    <div class="input-row">Coefficient matrix A (comma separated rows, eg. 4,1,2\\n3,5,1\\n1,1,3):<br>
+      <textarea id="gs_A" rows="3">4,1,2\n3,5,1\n1,1,3</textarea>
+    </div>
+    <div class="input-row">RHS vector b (comma separated): <input id="gs_b" type="text" value="4,7,3"></div>
+    <div class="input-row">Initial guess x (comma separated): <input id="gs_x0" type="text" value="0,0,0"></div>
+    <div class="input-row">Max iterations: <input id="gs_max" type="number" value="25"></div>
+    <div class="input-row">Tolerance: <input id="gs_tol" type="number" step="any" value="0.001"></div>
+    <button onclick="runGaussSeidel()">Solve</button>
+    <pre id="gs_result"></pre>
+  `;
 }
 function runGaussSeidel() {
-  var n = parseInt(document.getElementById("gs_n").value);
-  var A = document.getElementById("gs_A").value.split('\n').map(r => r.split(',').map(Number));
-  var b = document.getElementById("gs_b").value.split(',').map(Number);
-  var x = document.getElementById("gs_x0").value.split(',').map(Number);
-  var maxIter = parseInt(document.getElementById("gs_max").value);
-  var tol = parseFloat(document.getElementById("gs_tol").value);
+  var n = parseInt(document.getElementById("gs_n").value);
+  var A = document.getElementById("gs_A").value.split('\n').map(r => r.split(',').map(Number));
+  var b = document.getElementById("gs_b").value.split(',').map(Number);
+  var x = document.getElementById("gs_x0").value.split(',').map(Number);
+  var maxIter = parseInt(document.getElementById("gs_max").value);
+  var tol = parseFloat(document.getElementById("gs_tol").value);
 
-  let x_old = x.slice(), iter = 0, res = "";
-  while (iter < maxIter) {
-    let x_new = x.slice();
-    for (let i = 0; i < n; i++) {
-      let s = 0;
-      for (let j = 0; j < n; j++) {
-        if (j !== i) s += A[i][j] * x_new[j];
-      }
-      x_new[i] = (b[i] - s) / A[i][i];
-    }
-    // Stopping criterion using last iteration's values
-    if (Math.max(...x_new.map((xi, i) => Math.abs(xi - x[i]))) < tol) {
-      x = x_new.slice();
-      iter++;
-      res += `Iteration ${iter}: [${x.map(v => v.toFixed(4)).join(' ')}]\n`;
-      break;
-    }
-    x = x_new.slice();
-    iter++;
-    res += `Iteration ${iter}: [${x.map(v => v.toFixed(4)).join(' ')}]\n`;
-  }
-  document.getElementById("gs_result").textContent = `Solution: [${x.map(v => v.toFixed(4)).join(', ')}] after ${iter} iterations\n${res}`;
+  let x_old = x.slice(), iter = 0, res = "";
+  while (iter < maxIter) {
+    let x_new = x.slice();
+    for (let i = 0; i < n; i++) {
+      let s = 0;
+      for (let j = 0; j < n; j++) {
+        if (j !== i) s += A[i][j] * x_new[j];
+      }
+      x_new[i] = (b[i] - s) / A[i][i];
+    }
+    // Stopping criterion using last iteration's values
+    if (Math.max(...x_new.map((xi, i) => Math.abs(xi - x[i]))) < tol) {
+      x = x_new.slice();
+      iter++;
+      res += `Iteration ${iter}: [${x.map(v => v.toFixed(4)).join(' ')}]\n`;
+      break;
+    }
+    x = x_new.slice();
+    iter++;
+    res += `Iteration ${iter}: [${x.map(v => v.toFixed(4)).join(' ')}]\n`;
+  }
+  document.getElementById("gs_result").textContent = `Solution: [${x.map(v => v.toFixed(4)).join(', ')}] after ${iter} iterations\n${res}`;
 }
-
 
 // 3. Lagrange Interpolation
 function lagrangeForm() {
@@ -155,9 +264,7 @@ function runLagrange() {
   }
 }
 
-
-
-// 5. Double Integration
+// 4. Double Integration
 function doubleIntegralForm() {
   document.getElementById("solver-content").innerHTML = `
   <h3>Double Integration</h3>
@@ -196,7 +303,7 @@ function runDoubleIntegral() {
   }
 }
 
-// 6. Euler & Heun (Modified Euler)
+// 5. Euler & Heun (Modified Euler)
 function eulerForm() {
   document.getElementById("solver-content").innerHTML = `
     <h3>ODE Euler & Mod Euler</h3>
@@ -222,63 +329,59 @@ function runEuler() {
   eres.textContent = res;
 }
 
-// 7. Laplace/Poisson Equation
+// 6. Laplace/Poisson Equation
 function laplaceForm() {
-  document.getElementById("solver-content").innerHTML=`
-    <h3>2D Laplace/Poisson Equation</h3>
-    Equation (1=Laplace, 2=Poisson): <input id="lp_eq" value="1"><br>
-    nx: <input id="lp_nx" value="5"> ny: <input id="lp_ny" value="5"><br>
-    Max iters: <input id="lp_max" value="1000"> Tolerance: <input id="lp_tol" value="0.001"><br>
-    Top boundary (comma values): <input id="lp_top" value="1,1,1,1,1"><br>
-    Bottom boundary: <input id="lp_bottom" value="1,1,1,1,1"><br>
-    Left boundary: <input id="lp_left" value="1,1,1,1,1"><br>
-    Right boundary: <input id="lp_right" value="1,1,1,1,1"><br>
-    Poisson f(x,y) (e.g. "x+y" or "-2"): <input id="lp_f" value="0"><br>
-    <button onclick="runLaplace()">Set Up Boundaries / Solve</button>
-    <pre id="lp_res"></pre>
-  `;
+  document.getElementById("solver-content").innerHTML=`
+    <h3>2D Laplace/Poisson Equation</h3>
+    Equation (1=Laplace, 2=Poisson): <input id="lp_eq" value="1"><br>
+    nx: <input id="lp_nx" value="5"> ny: <input id="lp_ny" value="5"><br>
+    Max iters: <input id="lp_max" value="1000"> Tolerance: <input id="lp_tol" value="0.001"><br>
+    Top boundary (comma values): <input id="lp_top" value="1,1,1,1,1"><br>
+    Bottom boundary: <input id="lp_bottom" value="1,1,1,1,1"><br>
+    Left boundary: <input id="lp_left" value="1,1,1,1,1"><br>
+    Right boundary: <input id="lp_right" value="1,1,1,1,1"><br>
+    Poisson f(x,y) (e.g. "x+y" or "-2"): <input id="lp_f" value="0"><br>
+    <button onclick="runLaplace()">Set Up Boundaries / Solve</button>
+    <pre id="lp_res"></pre>
+  `;
 }
-
 function runLaplace() {
-  let eq=+lp_eq.value, nx=+lp_nx.value, ny=+lp_ny.value, maxIter=+lp_max.value, tol=+lp_tol.value;
-  let u=Array(nx).fill().map(()=>Array(ny).fill(0));
-  // Parse boundary conditions
-  let top=lp_top.value.split(',').map(Number);
-  let bottom=lp_bottom.value.split(',').map(Number);
-  let left=lp_left.value.split(',').map(Number);
-  let right=lp_right.value.split(',').map(Number);
-  // Apply boundaries
-  u[0]=top.slice(0,ny);
-  u[nx-1]=bottom.slice(0,ny);
-  for(let i=0;i<nx;i++){
-    u[i][0]=left[i]??0;
-    u[i][ny-1]=right[i]??0;
-  }
-  // Poisson function
-  let fxy=lp_f.value.trim();
-  let hx=1/(nx-1), hy=1/(ny-1), f=(x,y)=>0;
-  if(eq==2){
-    try{
-      f=new Function('x','y',`return ${fxy};`);
-    }catch(e){f=(x,y)=>0;}
-  }
-  let iter=0,converged=false;
-  while(iter<maxIter){
-    let uold=u.map(row=>row.slice()),maxD=0;
-    for(let i=1;i<nx-1;i++)for(let j=1;j<ny-1;j++){
-      let fval=(eq==2?hx*hy*f(i*hx,j*hy):0);
-      let val=(u[i-1][j]+u[i+1][j]+u[i][j-1]+u[i][j+1]-fval)/4;
-      maxD=Math.max(maxD,Math.abs(val-u[i][j]));
-      u[i][j]=val;
-    }
-    if(maxD<tol){converged=true;break;} iter++;
-  }
-  let s = u.map(row=>row.map(v=>v.toFixed(3)).join(' ')).join('\n');
-  lp_res.textContent=`Converged=${converged}, Steps=${iter}\n${s}`;
+  let eq=+lp_eq.value, nx=+lp_nx.value, ny=+lp_ny.value, maxIter=+lp_max.value, tol=+lp_tol.value;
+  let u=Array(nx).fill().map(()=>Array(ny).fill(0));
+  // Parse boundary conditions
+  let top=lp_top.value.split(',').map(Number);
+  let bottom=lp_bottom.value.split(',').map(Number);
+  let left=lp_left.value.split(',').map(Number);
+  let right=lp_right.value.split(',').map(Number);
+  // Apply boundaries
+  u[0]=top.slice(0,ny);
+  u[nx-1]=bottom.slice(0,ny);
+  for(let i=0;i<nx;i++){
+    u[i][0]=left[i]??0;
+    u[i][ny-1]=right[i]??0;
+  }
+  // Poisson function
+  let fxy=lp_f.value.trim();
+  let hx=1/(nx-1), hy=1/(ny-1), f=(x,y)=>0;
+  if(eq==2){
+    try{
+      f=new Function('x','y',`return ${fxy};`);
+    }catch(e){f=(x,y)=>0;}
+  }
+  let iter=0,converged=false;
+  while(iter<maxIter){
+    let uold=u.map(row=>row.slice()),maxD=0;
+    for(let i=1;i<nx-1;i++)for(let j=1;j<ny-1;j++){
+      let fval=(eq==2?hx*hy*f(i*hx,j*hy):0);
+      let val=(u[i-1][j]+u[i+1][j]+u[i][j-1]+u[i][j+1]-fval)/4;
+      maxD=Math.max(maxD,Math.abs(val-u[i][j]));
+      u[i][j]=val;
+    }
+    if(maxD<tol){converged=true;break;} iter++;
+  }
+  let s = u.map(row=>row.map(v=>v.toFixed(3)).join(' ')).join('\n');
+  lp_res.textContent=`Converged=${converged}, Steps=${iter}\n${s}`;
 }
-
-
-
 </script>
 </body>
 </html>
